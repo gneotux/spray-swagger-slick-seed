@@ -24,7 +24,7 @@ Follow these steps to get started:
 
         $ cd my-project
 
-3. Create the database in postgres using the script in {DIRECTORY}/src/main/resources/schema.sql
+3 (Optional). Create the database in postgres using the script in {DIRECTORY}/src/main/resources/schema.sql, modify the application.conf file
 
 
 4. Run the application
@@ -35,6 +35,7 @@ Follow these steps to get started:
 
 
 6. Learn more at
+
 http://www.spray.io/
 https://github.com/gettyimages/spray-swagger
 http://slick.typesafe.com/news/2015/02/20/slick-3.0.0-RC1-released.html
