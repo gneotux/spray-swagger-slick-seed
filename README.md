@@ -1,4 +1,6 @@
 ## Spray-swagger-slick-seed
+[![Build Status](https://travis-ci.org/Gneotux/spray-swagger-slick-seed.svg?branch=master)](https://travis-ci.org/Gneotux/spray-swagger-slick-seed)
+[![Coverage Status](https://coveralls.io/repos/Gneotux/spray-swagger-slick-seed/badge.svg?branch=master&service=github)](https://coveralls.io/github/Gneotux/spray-swagger-slick-seed?branch=master)
 
 Seed for activator
 

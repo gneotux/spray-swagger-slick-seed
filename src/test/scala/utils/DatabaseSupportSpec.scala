@@ -4,6 +4,7 @@ import dao.{ UserDao, PasswordDao }
 import model.{ User, UserPassword }
 import org.specs2.mutable.Specification
 import org.specs2.specification.BeforeAfterEach
+import slick.jdbc.meta.MTable
 import utils.DatabaseConfig._
 import utils.DatabaseConfig.profile.api._
 
@@ -27,26 +28,28 @@ object DatabaseSupportSpec {
 trait SpecSupport extends Specification with BeforeAfterEach {
 
   def createSchema = {
-    val results = db.run(
+    val dropAll = (PasswordDao.passwords.schema ++ UserDao.users.schema).drop
+
+    val createAll =
       DBIO.seq(
         (PasswordDao.passwords.schema ++ UserDao.users.schema).create,
         PasswordDao.passwords ++= DatabaseSupportSpec.passwords,
         UserDao.users ++= DatabaseSupportSpec.users
-      ))
+      )
+
+    val results = db.run(MTable.getTables).flatMap {
+      tables => if (tables.toList.size > 1) {
+        db.run(dropAll).flatMap(_ => db.run(createAll))
+      } else db.run(createAll)
+    }
 
     Await.result(results, Duration.Inf)
   }
 
-  def dropSchema = {
-    val results = db.run((PasswordDao.passwords.schema ++ UserDao.users.schema).drop)
-    Await.result(results, Duration.Inf)
-  }
-  override def before: Unit={
+  override def before: Unit= {
     createSchema
   }
 
-  override def after: Unit = {
-    dropSchema
-  }
+  override def after: Unit= { }
 }
 
